@@ -8,12 +8,12 @@ import (
 	"golang.org/x/net/html"
 )
 
-func getURLsFromHTML(htmlBody, rawBaseUrl string) ([]string, error) {
+func getURLsFromHTML(htmlBody string, baseURL *url.URL) ([]string, error) {
 
-	baseUrl, err := url.Parse(rawBaseUrl)
-	if err != nil {
-		return nil, fmt.Errorf("couldn't parse base url: %v", err)
-	}
+	// baseUrl, err := url.Parse(baseURL)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("couldn't parse base url: %v", err)
+	// }
 
 	var urls []string
 
@@ -31,7 +31,7 @@ func getURLsFromHTML(htmlBody, rawBaseUrl string) ([]string, error) {
 			return urls, err
 		}
 
-		resolvedURL := baseUrl.ResolveReference(url)
+		resolvedURL := baseURL.ResolveReference(url)
 		finalurl := strings.TrimSuffix(resolvedURL.String(), "/")
 		urls = append(urls, finalurl)
 	}
